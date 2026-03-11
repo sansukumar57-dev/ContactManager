@@ -6,8 +6,8 @@ public interface ContactInterface {
 
     public void setName(String name);
 
-    public String getNumber();
+    public Integer getNumber();
 
-    public void setNumber(String number);
+    public void setNumber(Integer number);
 
 }

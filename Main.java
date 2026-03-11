@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//        1.⁠ ⁠CLI Contact Manager
+//        1.CLI Contact Manager
 //
 //        Problem Statement:
 //        People store many contacts and need a simple way to manage them. Build a CLI application to store and manage contact details.
@@ -29,8 +29,6 @@ public class Main {
             System.out.println("Welcome to Contact Manager ");
             boolean flag=false;
             while (!flag){
-
-
                 System.out.println("1.Start 2.Close");
                 try {
                     appChoice = new Integer(sc.nextLine());
@@ -69,38 +67,29 @@ public class Main {
                     }
                 }
              else   if(userHasLogin==-2){
-                    System.out.println("Invalid Credintials ");
+                    System.out.println("Invalid Credentials ");
                     continue;
                 }
              else {
                     System.out.println("Welcome Back " + username );
                     user = users[userHasLogin];
                 }
+             int choice = 0;
 
-
-
-
-
-
-
-
-        int choice = 0;
-
-
-
-        while (choice != 5) {
+             while (choice != 6) {
 
             ContactInterface contact = null;
             System.out.println("=============== Contact Manager =============");
-            System.out.println("1.Add Contact ");
-            System.out.println("2.View all Contacts ");
-            System.out.println("3.Search Contact ");
-            System.out.println("4.Delete Contact");
-            System.out.println("5.Exit ");
+            System.out.println("1. Add Contact ");
+            System.out.println("2. View all Contacts ");
+            System.out.println("3. Search Contacts ");
+            System.out.println("4. Update Contact");
+            System.out.println("5. Delete Contacts");
+            System.out.println("6. Exit ");
             System.out.println("Enter the Choice: ");
             try {
                 choice = new Integer(sc.nextLine());
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Enter the correct Number ");
                 continue;
             }
@@ -109,47 +98,55 @@ public class Main {
             if (choice == 1) {
                 boolean addContact = false;
                 String name = null;
-                String number = null;
+                Integer number = null;
 
                 while (!addContact) {
                     System.out.println("Enter the  Name: ");
-                    try {
-                        name = sc.nextLine();
-                        if (name.isEmpty()) {
-                            throw new Exception();
+                    boolean nameCorrection=false;
+                    while(!nameCorrection) {
+                        try {
+                            name = sc.nextLine();
+                            if (name.isEmpty()) {
+                                throw new Exception();
+                            }
+                        } catch (Exception e) {
+
+                            System.out.println("Enter the  Correct name");
+                            continue;
+
                         }
-                    } catch (Exception e) {
-
-                        System.out.println("Enter the  Corrrect name");
-                        continue;
-
+                        nameCorrection=true;
                     }
 
                     System.out.println("Enter the phoneNumber: ");
-                    try {
-                        number = sc.nextLine();
-                        if (name.isEmpty()) {
-                            throw new Exception();
+                    boolean numberCorrection=false;
+                    while (!numberCorrection) {
+
+                        try {
+                            number = new Integer(sc.nextLine());
+
+                        } catch (Exception e) {
+                            System.out.println("Enter the  Correct PhoneNumber");
+                            continue;
                         }
-                    } catch (Exception e) {
-                        System.out.println("Enter the  Corrrect name");
-                        continue;
-                    }
-                    contact = new Contact(name, number);
-                    for (int i = 0; i < user.getContacts().length; i++) {
-                        if (user.getContacts()[i] == null) {
-                            user.getContacts()[i] = contact;
-                            break;
-                        }
+                        numberCorrection=true;
                     }
 
-                    for (int i = 0; i < user.getContacts().length; i++) {
-                        if (user.getContacts()[i] != null) {
-
-                            System.out.println("Name " + user.getContacts()[i].getName());
-                            System.out.println("PhoneNumber " + user.getContacts()[i].getNumber());
-                        }
+                    boolean createdContact=user.createContact(name,number);
+                    if(createdContact==true){
+                        System.out.println("Contact is created");
                     }
+                   else {
+                        System.out.println("Not here to create contact ");
+                    }
+
+//                    for (int i = 0; i < user.getContacts().length; i++) {
+//                        if (user.getContacts()[i] != null) {
+//
+//                            System.out.println("Name " + user.getContacts()[i].getName());
+//                            System.out.println("PhoneNumber " + user.getContacts()[i].getNumber());
+//                        }
+//                    }
 
 
 //                    System.out.println("Name: " + contact.getName());
@@ -168,18 +165,10 @@ public class Main {
                 while(!showContact){
                 System.out.println("======== Contacts ========");
                 ContactInterface[] contacts = user.getContacts();
-                boolean empty = true;
+                boolean empty = user.diaplayContact();
 
-                for (int i = 0; i < user.getContacts().length; i++) {
-                    if (user.getContacts()[i] != null) {
-                        System.out.print(i+1+"] Name:" + user.getContacts()[i].getName() + " ");
-                        System.out.println("PhoneNumber:" + user.getContacts()[i].getNumber());
-                        empty = false;
-                    }
-
-                }
-                if (empty) {
-                    System.out.println("No contacts found.");
+                if (empty==false) {
+                    System.out.println("No contacts found To View.");
                 }
 
                     System.out.println("If you want to exit [yes] continue [enter] ");
@@ -189,30 +178,76 @@ public class Main {
                 }
 
                 }
-            } else if (choice == 3) {
+            }else if (choice==3) {
+
+                boolean search=false;
+                String searchName=null;
+                Integer searchNumbers=null;
+                while(!search){
+                    System.out.println("======= Search Contact =======");
+                    System.out.println("1.Search Name ");
+                    System.out.println("2.Number ");
+                    int searchNumber=0;
+                    boolean searched=false;
+                    try {
+                        searchNumber = new Integer(sc.nextLine());
+                        if (searchNumber <= 0 || searchNumber > 2) {
+                            throw new Exception();
+
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Enter the correct Number");
+                        continue;
+                    }
+                    if(searchNumber==1){
+                        System.out.println("Enter the Name: ");
+                        searchName=sc.nextLine();
+                        searched=user.searchContact(searchName,null);
+                    }
+                  else   if(searchNumber==2){
+                        searchNumbers=new Integer(sc.nextLine());
+                        searched=user.searchContact(null,searchNumbers);
+                  }
+
+                    if(searched==false)
+                    {
+                        System.out.println("No Contact Found");
+                    }
+                    System.out.println("If you want to exit [yes] continue [enter]");
+                    String exit = sc.nextLine();
+
+                    if(exit.equals("yes")){
+                        search = true;
+                    }
+                }
+
+
+            }
+
+            else if (choice == 4) {
                 boolean update=false;
                 int updateChoice=0;
                 int updateChoices=0;
-                String newName=null;
-                String newNumber=null;
+
                 boolean ableToUpdateContact=false;
                 while(!update) {
                     System.out.println("===== Update ======");
-                    for (int i = 0; i < user.getContacts().length; i++) {
-                        if(user.getContacts()[i]!=null){
-                            System.out.print(i+1+"] Name:" + user.getContacts()[i].getName() + " ");
-                            System.out.println("PhoneNumber:" + user.getContacts()[i].getNumber());
-                            ableToUpdateContact=true;
-                        }
+                     ableToUpdateContact = user.diaplayContact();
+
+                    if (ableToUpdateContact==false) {
+                        System.out.println("No contacts found To Update.");
+                            update=true;
+
                     }
-                    if(ableToUpdateContact){
+                    else
+                    {
                     System.out.println("Pick Which contact you want to update ");
                     boolean updateNumber=false;
                     while(!updateNumber) {
 
                         try {
                             updateChoices = new Integer(sc.nextLine());
-                            if (updateChoices <= 0 || updateChoices > user.getContacts().length) {
+                            if (updateChoices <= 0 || updateChoices > user.getContacts().length||user.getContacts()[updateChoices-1]==null) {
                                 throw new Exception();
                             }
                         } catch (Exception e) {
@@ -224,35 +259,15 @@ public class Main {
 
 
 
-                    System.out.println("1.Update Name");
-                    System.out.println("2.Update Number");
-                    boolean nameOrNumber=false;
-                    while (!nameOrNumber) {
-
-                        try {
-                            updateChoice = new Integer(sc.nextLine());
-                            if (updateChoice <= 0 || updateChoice > 2) {
-                                throw new Exception();
-                            }
-                        } catch (Exception e) {
-
-                            System.out.println("Enter the  Corrrect number");
-                            continue;
-
-                        }
-                        nameOrNumber=true;
+                  boolean updated=user.updateContact(updateChoices,sc);
+                    if(updated){
+                        System.out.println("Contact is Updated ");
                     }
-                    if(updateChoice==1){
-                        System.out.println("Enter  the New Name ");
-                         newName=sc.nextLine();
-                        user.getContacts()[updateChoices-1].setName(newName);
+                    else if(updated==false){
+
+                            System.out.println("No contact here to update");
+
                     }
-                    if(updateChoice==2){
-                        System.out.println("Enter the New Number ");
-                         newNumber=sc.nextLine();
-                        user.getContacts()[updateChoices-1].setNumber(newNumber);
-                    }
-                    System.out.println(" Contact is Updated ");
                     System.out.println();
 
                     System.out.println("If you want to exit [yes] continue [enter] ");
@@ -264,30 +279,29 @@ public class Main {
 
 
                 }
-                    if(ableToUpdateContact==false){
-                        System.out.println("Not her a contact to update");
-                        update=true;
-                    }
+
                 }
 
 
-            } else if (choice == 4) {
+            } else if (choice == 5) {
                 System.out.println("===== Delete ======");
                 boolean deleteFlag=false;
+                boolean deleteContact=false;
                 while(!deleteFlag) {
-                    for (int i = 0; i < user.getContacts().length; i++) {
-                        if (user.getContacts()[i] != null) {
-                            System.out.print(i + 1 + "] Name:" + user.getContacts()[i].getName() + " ");
-                            System.out.println("PhoneNumber :" + user.getContacts()[i].getNumber());
-                        }
-                    }
+                   deleteContact=user.diaplayContact();
+                   if(deleteContact==false){
+                       System.out.println("No contact Here to delete");
+                       deleteFlag=true;
+                       continue;
+                   }
+
                     System.out.println("Pick Which contact you want to Delete ");
                     int deleteChoice = 0;
 
                     try{
                         deleteChoice = new  Integer(sc.nextLine());
 
-                        if(deleteChoice <= 0 || deleteChoice > user.getContacts().length){
+                        if(deleteChoice <= 0 || deleteChoice > user.getContacts().length||user.getContacts()[deleteChoice-1]==null){
                             throw new Exception();
                         }
 
@@ -295,22 +309,7 @@ public class Main {
                         System.out.println("Enter correct number");
                         continue;
                     }
-
-
-                    user.getContacts()[deleteChoice - 1] = null;
-                    for (int i = 0; i < user.getContacts().length; i++) {
-                        if (user.getContacts()[i] == null) {
-                            for (int j = i + 1; j < user.getContacts().length; j++) {
-                                if (user.getContacts()[j] != null) {
-                                    ContactInterface tempContact = user.getContacts()[j];
-                                    user.getContacts()[j] = user.getContacts()[i];
-                                    user.getContacts()[i] = tempContact;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    System.out.println("Contact Deleted Successfully");
+                    user.deleteContact(deleteChoice);
                     System.out.println();
                     System.out.println("If you want to exit [yes] continue [enter] ");
                     String deleteContactExit=sc.nextLine();
@@ -321,9 +320,9 @@ public class Main {
                 }
 
 
-            } else if (choice == 5) {
+            }  else if (choice == 6) {
                 System.out.println("Exit ");
-                break;
+                flag=true;
 
             } else {
                 System.out.println("Enter the correct number ");
@@ -335,3 +334,41 @@ public class Main {
     }
 }
 }
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */

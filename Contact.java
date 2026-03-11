@@ -2,12 +2,15 @@ package ContactNumber;
 
 public class Contact implements ContactInterface {
     private String name;
-    private String number;
-
-    public Contact(String name, String number) {
+    private Integer number;
+    public Contact() {
+       this.number=0000000000;
+    }
+    public Contact(String name, Integer number) {
         this.name = name;
         this.number = number;
     }
+
 
     public String getName() {
         return name;
@@ -17,11 +20,11 @@ public class Contact implements ContactInterface {
         this.name = name;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 }
