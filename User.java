@@ -76,7 +76,7 @@ public class User implements UserInterface {
                 }
             } catch (Exception e) {
 
-                System.out.println("Enter the  Corrrect number");
+                System.out.println("Enter the  Correct number");
                 continue;
 
             }
@@ -94,10 +94,7 @@ public class User implements UserInterface {
            contacts[updateChoices-1].setNumber(newNumber);
             return true;
         }
-
-
-
-        return false;
+      return false;
 
     }
 

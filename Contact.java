@@ -4,7 +4,7 @@ public class Contact implements ContactInterface {
     private String name;
     private Integer number;
     public Contact() {
-       this.number=0000000000;
+       this.number=0;
     }
     public Contact(String name, Integer number) {
         this.name = name;

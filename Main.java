@@ -1,7 +1,5 @@
 package ContactNumber;
 
-
-
 import java.util.Scanner;
 
 public class Main {
@@ -24,11 +22,13 @@ public class Main {
         UserInterface[] users = new User[10];
         int appChoice=1;
 
-        while(appChoice==1){
+        while(appChoice==1)
+        {
 
             System.out.println("Welcome to Contact Manager ");
             boolean flag=false;
-            while (!flag){
+            while (!flag)
+            {
                 System.out.println("1.Start 2.Close");
                 try {
                     appChoice = new Integer(sc.nextLine());
@@ -52,7 +52,7 @@ public class Main {
                 String username = sc.nextLine();
                 System.out.println("Enter the Password");
                 String password = sc.nextLine();
-                UserInterface user=null;
+                UserInterface user;
 
                 int userHasLogin=Utilities.login(users,username,password);
                 if(userHasLogin==-1){
@@ -78,7 +78,7 @@ public class Main {
 
              while (choice != 6) {
 
-            ContactInterface contact = null;
+            ContactInterface contact ;
             System.out.println("=============== Contact Manager =============");
             System.out.println("1. Add Contact ");
             System.out.println("2. View all Contacts ");
@@ -133,24 +133,12 @@ public class Main {
                     }
 
                     boolean createdContact=user.createContact(name,number);
-                    if(createdContact==true){
+                    if(createdContact){
                         System.out.println("Contact is created");
                     }
                    else {
                         System.out.println("Not here to create contact ");
                     }
-
-//                    for (int i = 0; i < user.getContacts().length; i++) {
-//                        if (user.getContacts()[i] != null) {
-//
-//                            System.out.println("Name " + user.getContacts()[i].getName());
-//                            System.out.println("PhoneNumber " + user.getContacts()[i].getNumber());
-//                        }
-//                    }
-
-
-//                    System.out.println("Name: " + contact.getName());
-//                    System.out.println("Phone: " + contact.getNumber());
 
 
                     System.out.println("If you want new Contact [enter] or exit [yes]   ");
@@ -229,7 +217,7 @@ public class Main {
                 int updateChoice=0;
                 int updateChoices=0;
 
-                boolean ableToUpdateContact=false;
+                boolean ableToUpdateContact;
                 while(!update) {
                     System.out.println("===== Update ======");
                      ableToUpdateContact = user.diaplayContact();
@@ -263,7 +251,7 @@ public class Main {
                     if(updated){
                         System.out.println("Contact is Updated ");
                     }
-                    else if(updated==false){
+                    else {
 
                             System.out.println("No contact here to update");
 
@@ -275,28 +263,27 @@ public class Main {
                     if(updateContactExit.equals("yes")){
                         update=true;
                     }
-
-
-
-                }
+                    }
 
                 }
 
 
             } else if (choice == 5) {
                 System.out.println("===== Delete ======");
-                boolean deleteFlag=false;
-                boolean deleteContact=false;
-                while(!deleteFlag) {
+
+                boolean deleteContact;
+                while(true)
+                {
                    deleteContact=user.diaplayContact();
-                   if(deleteContact==false){
+                   if(deleteContact==false)
+                   {
                        System.out.println("No contact Here to delete");
-                       deleteFlag=true;
+
                        continue;
                    }
 
                     System.out.println("Pick Which contact you want to Delete ");
-                    int deleteChoice = 0;
+                    int deleteChoice ;
 
                     try{
                         deleteChoice = new  Integer(sc.nextLine());
@@ -314,7 +301,7 @@ public class Main {
                     System.out.println("If you want to exit [yes] continue [enter] ");
                     String deleteContactExit=sc.nextLine();
                     if(deleteContactExit.equals("yes")){
-                        deleteFlag=true;
+                       break;
                     }
 
                 }
